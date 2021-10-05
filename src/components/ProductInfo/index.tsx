@@ -8,7 +8,12 @@ import {
   Select,
   MenuItem,
   Button,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
 } from "@material-ui/core";
+import React from "react";
 
 interface ProductInfoProps {
   product: Product;
@@ -31,6 +36,7 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
 
   var colors: any[] = [];
   var sizes: any[] = [];
+  var comments: any[] = [];
 
   var selectedColor = "";
   var selectedSize = "";
@@ -43,6 +49,28 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
     selectedSize = props.product.childSkus[0].size;
     props.product.childSkus.forEach((sku) => {
       sizes.push(<MenuItem value={sku.size}>{sku.size}</MenuItem>);
+    });
+
+    props.product.comments.forEach((comment) => {
+      comments.push(
+        <React.Fragment>
+          <ListItem alignItems="flex-start">
+            <ListItemText
+              primary={comment.author}
+              secondary={
+                <React.Fragment>
+                  <Typography>
+                  {comment.body}
+                  </Typography>
+                  {comment.created}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </React.Fragment>
+
+      );
     });
   }
 
@@ -126,6 +154,18 @@ const ProductInfo: React.FC<ProductInfoProps> = (props) => {
 
           <Grid item lg={12} />
         </Grid>
+      </Grid>
+      <Grid container className="commentsGrid" spacing={2}>
+        <Grid item lg={4}>
+          <Typography className="comment-title" variant="h2">Comments</Typography>
+        </Grid>
+        <Grid item lg={8} />
+        <Grid item lg={12}>
+          <List>
+            {comments}
+          </List>
+        </Grid>
+
       </Grid>
     </div>
   );

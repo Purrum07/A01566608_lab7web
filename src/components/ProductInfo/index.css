@@ -37,3 +37,8 @@
     background-color: #ff7b00f7 !important;
     color: #ffffff !important;
   }
+
+  h2.comment-title {
+    font-size: 2rem !important;
+    font-weight: bold;
+  }
